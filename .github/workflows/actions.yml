@@ -1,0 +1,26 @@
+# .github/workflows/actions.yml
+
+name: Github Actions로 테스트 자동화하기
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Github Repository 불러오기
+        uses: actions/checkout@v5
+
+      - name: Node.js 설치하기
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: npm 설치 및 빌드 시간 측정
+        run: |
+          echo "=== npm 테스트 시작 ==="
+          echo "npm install 시작"
+          time npm install
+          echo "npm run build 시작"
+          time npm run build
+          echo "=== npm 테스트 종료 ==="
