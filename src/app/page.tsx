@@ -1,90 +1,99 @@
-// src/app/page.tsx
-
 "use client";
 
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const ThemeToggle = dynamic(() => import("@/components/ThemeToggle"), {
+  ssr: false,
+});
 
 export default function Home() {
-  // 1. 테마 상태 관리
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
-    // 서버 환경이면 바로 light 반환
-    if (typeof window === "undefined") {
-      return "light";
-    }
-
-    // 로컬스토리지에 테마 값이 있다면 -> 해당 테마 반환
-    if (localStorage.getItem("theme")) {
-      return localStorage.getItem("theme") as "light" | "dark";
-    }
-
-    // 로컬스토리지에 테마 값이 없다면 -> 시스템 테마 따라감
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      return "dark";
-    }
-
-    // 기본값 light
-    return "light";
-  });
-
-  const toggleTheme = (newTheme: "light" | "dark" | "system") => {
-    // 시스템 테마를 선택한 경우 localStorage에 theme 삭제 & 시스템 테마 적용
-    if (newTheme === "system") {
-      localStorage.removeItem("theme");
-      setTheme(
-        window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light",
-      );
-    } else {
-      // 로컬스토리지에 테마 값 저장 & 해당 테마 적용
-      localStorage.setItem("theme", newTheme);
-      setTheme(newTheme);
-    }
-  };
-
-  // theme 변경 시 루트 태그(html)에 dark 클래스 추가 -> 실제 다크모드 적용
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-  }, [theme]);
-
-  // 시스템 테마 변경 감지
-  useEffect(() => {
-    const themeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-    const handleSystemThemeChange = (e: MediaQueryListEvent) => {
-      if (!localStorage.getItem("theme")) {
-        setTheme(e.matches ? "dark" : "light");
-      }
-    };
-
-    themeMediaQuery.addEventListener("change", handleSystemThemeChange);
-
-    return () => {
-      themeMediaQuery.removeEventListener("change", handleSystemThemeChange);
-    };
-  }, []);
+  const blogPosts = [
+    {
+      title: "첫 번째 블로그 포스트",
+      description: "블로그 포스트 설명입니다.",
+      date: "2024-03-20",
+      imageUrl:
+        "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      title: "두 번째 블로그 포스트",
+      description: "블로그 포스트 설명입니다.",
+      date: "2024-03-21",
+      imageUrl:
+        "https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      title: "세 번째 블로그 포스트",
+      description: "블로그 포스트 설명입니다.",
+      date: "2024-03-22",
+      imageUrl:
+        "https://images.unsplash.com/photo-1455894127589-22f75500213a?q=80&w=1987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      title: "네 번째 블로그 포스트",
+      description: "블로그 포스트 설명입니다.",
+      date: "2024-03-23",
+      imageUrl:
+        "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      title: "다섯 번째 블로그 포스트",
+      description: "블로그 포스트 설명입니다.",
+      date: "2024-03-24",
+      imageUrl:
+        "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      title: "여섯 번째 블로그 포스트",
+      description: "블로그 포스트 설명입니다.",
+      date: "2024-03-25",
+      imageUrl:
+        "https://images.unsplash.com/photo-1522410818928-5522dacd5066?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+  ];
 
   return (
-    <div>
-      <div className="dark:bg-black dark:text-white">안녕</div>
-      <button
-        className="border bg-yellow-500 px-4 py-2"
-        onClick={() => toggleTheme("system")}
-      >
-        시스템
-      </button>
-      <button
-        className="border bg-white px-4 py-2"
-        onClick={() => toggleTheme("light")}
-      >
-        라이트
-      </button>
-      <button
-        className="border bg-black px-4 py-2 text-white"
-        onClick={() => toggleTheme("dark")}
-      >
-        다크
-      </button>
-    </div>
+    <main className="mx-auto px-4 py-8 dark:bg-gray-900">
+      <div className="mb-4 flex justify-end">
+        <ThemeToggle />
+      </div>
+      <h1 className="mb-8 text-center text-4xl font-bold dark:text-white">
+        나의 블로그
+      </h1>
+
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {blogPosts.map((post, index) => (
+          <div
+            key={index}
+            className="overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl dark:bg-gray-800"
+          >
+            <Image
+              width={500}
+              height={500}
+              src={post.imageUrl}
+              alt={post.title}
+              className="h-48 w-full object-cover"
+            />
+            <div className="p-6">
+              <h2 className="mb-2 text-xl font-semibold dark:text-white">
+                {post.title}
+              </h2>
+              <p className="mb-4 text-gray-600 dark:text-gray-300">
+                {post.description}
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-500 dark:text-gray-400">
+                  {post.date}
+                </span>
+                <button className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+                  자세히 보기
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </main>
   );
 }
