@@ -1,99 +1,274 @@
-"use client";
-
-import Image from "next/image";
-import dynamic from "next/dynamic";
-
-const ThemeToggle = dynamic(() => import("@/components/ThemeToggle"), {
-  ssr: false,
-});
-
 export default function Home() {
-  const blogPosts = [
-    {
-      title: "첫 번째 블로그 포스트",
-      description: "블로그 포스트 설명입니다.",
-      date: "2024-03-20",
-      imageUrl:
-        "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      title: "두 번째 블로그 포스트",
-      description: "블로그 포스트 설명입니다.",
-      date: "2024-03-21",
-      imageUrl:
-        "https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      title: "세 번째 블로그 포스트",
-      description: "블로그 포스트 설명입니다.",
-      date: "2024-03-22",
-      imageUrl:
-        "https://images.unsplash.com/photo-1455894127589-22f75500213a?q=80&w=1987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      title: "네 번째 블로그 포스트",
-      description: "블로그 포스트 설명입니다.",
-      date: "2024-03-23",
-      imageUrl:
-        "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      title: "다섯 번째 블로그 포스트",
-      description: "블로그 포스트 설명입니다.",
-      date: "2024-03-24",
-      imageUrl:
-        "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      title: "여섯 번째 블로그 포스트",
-      description: "블로그 포스트 설명입니다.",
-      date: "2024-03-25",
-      imageUrl:
-        "https://images.unsplash.com/photo-1522410818928-5522dacd5066?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
-
   return (
-    <main className="mx-auto px-4 py-8 dark:bg-gray-900">
-      <div className="mb-4 flex justify-end">
-        <ThemeToggle />
-      </div>
-      <h1 className="mb-8 text-center text-4xl font-bold dark:text-white">
-        나의 블로그
-      </h1>
+    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-indigo-100">
+      {/* 헤더 섹션 */}
+      <header className="container mx-auto px-4 py-6">
+        {/* flex items-center justify-between 적용 */}
+        <nav className="flex items-center justify-between">
+          <div className="text-xl font-bold text-indigo-600">내 포트폴리오</div>
+          {/* flex gap-6 적용 */}
+          <ul className="flex gap-6">
+            <li>
+              <a
+                href="#about"
+                className="text-gray-600 transition-colors hover:text-indigo-600"
+              >
+                소개
+              </a>
+            </li>
+            <li>
+              <a
+                href="#projects"
+                className="text-gray-600 transition-colors hover:text-indigo-600"
+              >
+                프로젝트
+              </a>
+            </li>
+            <li>
+              <a
+                href="#contact"
+                className="text-gray-600 transition-colors hover:text-indigo-600"
+              >
+                연락처
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </header>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {blogPosts.map((post, index) => (
-          <div
-            key={index}
-            className="overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl dark:bg-gray-800"
-          >
-            <Image
-              width={500}
-              height={500}
-              src={post.imageUrl}
-              alt={post.title}
-              className="h-48 w-full object-cover"
-            />
+      {/* 히어로 섹션 */}
+      {/* flex, flex-col, items-center로 중앙 정렬 */}
+      {/* text-center: 텍스트 가운데 정렬 */}
+      <section className="container mx-auto flex flex-col items-center px-4 py-16 text-center">
+        <div className="mb-6 flex h-32 w-32 items-center justify-center overflow-hidden rounded-full bg-indigo-200">
+          <span className="text-4xl">👋</span>
+        </div>
+        <h1 className="mb-4 text-4xl font-bold text-gray-800">
+          안녕하세요, 저는 홍길동입니다
+        </h1>
+        <p className="mb-8 max-w-2xl text-xl text-gray-600">
+          프론트엔드 개발에 관심이 많은 주니어 개발자입니다. Next.js와 Tailwind
+          CSS를 배우고 있습니다.
+        </p>
+        <button className="transform rounded-lg bg-indigo-600 px-6 py-3 text-white shadow-lg transition-all hover:scale-105 hover:bg-indigo-700">
+          연락하기
+        </button>
+      </section>
+
+      {/* 소개 섹션 */}
+      <section id="about" className="container mx-auto px-4 py-16">
+        <h2 className="mb-12 text-center text-3xl font-bold text-gray-800">
+          소개
+        </h2>
+        {/* 1열 2열 */}
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="rounded-xl bg-white p-8 shadow-lg">
+            <h3 className="mb-4 text-xl font-semibold text-indigo-600">
+              내 스킬
+            </h3>
+            {/* flex-wrap 채우기 */}
+            <div className="flex flex-wrap gap-2">
+              <span className="rounded-full bg-indigo-100 px-3 py-1 text-indigo-800">
+                HTML
+              </span>
+              <span className="rounded-full bg-indigo-100 px-3 py-1 text-indigo-800">
+                CSS
+              </span>
+              <span className="rounded-full bg-indigo-100 px-3 py-1 text-indigo-800">
+                JavaScript
+              </span>
+              <span className="rounded-full bg-indigo-100 px-3 py-1 text-indigo-800">
+                React
+              </span>
+              <span className="rounded-full bg-indigo-100 px-3 py-1 text-indigo-800">
+                Next.js
+              </span>
+              <span className="rounded-full bg-indigo-100 px-3 py-1 text-indigo-800">
+                Tailwind CSS
+              </span>
+            </div>
+          </div>
+          <div className="rounded-xl bg-white p-8 shadow-lg">
+            <h3 className="mb-4 text-xl font-semibold text-indigo-600">
+              내 취미
+            </h3>
+            <ul className="space-y-2">
+              <li className="flex items-center gap-2">
+                <span className="text-indigo-600">✨</span> 코딩하기
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-indigo-600">📚</span> 기술 책 읽기
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-indigo-600">🎮</span> 게임하기
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-indigo-600">🏃‍♂️</span> 조깅하기
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* 프로젝트 섹션 */}
+      <section
+        id="projects"
+        // container: 크기 조정
+        // mx-auto: 가운데 정렬
+        // rounded-t-3xl: 위 모서리 둥글게
+        // bg-white: 배경색
+        // px-4 py-16: 안쪽 여백
+        // shadow-inner: 그림자 효과
+        className="container mx-auto rounded-t-3xl bg-white px-4 py-16 shadow-inner"
+      >
+        <h2 className="mb-12 text-center text-3xl font-bold text-gray-800">
+          프로젝트
+        </h2>
+        {/* grid-cols-1: 1열 */}
+        {/* gap-6: 요소 간격 */}
+        {/* md:grid-cols-3: 미디어 쿼리 조건 */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {/* 프로젝트 카드 1 */}
+          <div className="group overflow-hidden rounded-xl bg-gray-50 shadow-lg transition-all hover:shadow-xl">
+            <div className="flex h-48 items-center justify-center bg-indigo-200">
+              <span className="text-4xl">🚀</span>
+            </div>
             <div className="p-6">
-              <h2 className="mb-2 text-xl font-semibold dark:text-white">
-                {post.title}
-              </h2>
-              <p className="mb-4 text-gray-600 dark:text-gray-300">
-                {post.description}
+              <h3 className="mb-2 text-xl font-semibold text-gray-800 transition-colors group-hover:text-indigo-600">
+                포트폴리오 웹사이트
+              </h3>
+              <p className="mb-4 text-gray-600">
+                Next.js와 Tailwind CSS를 이용한 개인 포트폴리오 웹사이트입니다.
               </p>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {post.date}
+              <div className="flex flex-wrap gap-2">
+                <span className="rounded bg-gray-200 px-2 py-1 text-xs">
+                  Next.js
                 </span>
-                <button className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
-                  자세히 보기
-                </button>
+                <span className="rounded bg-gray-200 px-2 py-1 text-xs">
+                  Tailwind
+                </span>
               </div>
             </div>
           </div>
-        ))}
-      </div>
+
+          {/* 프로젝트 카드 2 */}
+          <div className="group overflow-hidden rounded-xl bg-gray-50 shadow-lg transition-all hover:shadow-xl">
+            <div className="flex h-48 items-center justify-center bg-indigo-200">
+              <span className="text-4xl">📝</span>
+            </div>
+            <div className="p-6">
+              <h3 className="mb-2 text-xl font-semibold text-gray-800 transition-colors group-hover:text-indigo-600">
+                할 일 관리 앱
+              </h3>
+              <p className="mb-4 text-gray-600">
+                React를 이용한 간단한 할 일 관리 애플리케이션입니다.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="rounded bg-gray-200 px-2 py-1 text-xs">
+                  React
+                </span>
+                <span className="rounded bg-gray-200 px-2 py-1 text-xs">
+                  CSS
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* 프로젝트 카드 3 */}
+          <div className="group overflow-hidden rounded-xl bg-gray-50 shadow-lg transition-all hover:shadow-xl">
+            <div className="flex h-48 items-center justify-center bg-indigo-200">
+              <span className="text-4xl">🌦️</span>
+            </div>
+            <div className="p-6">
+              <h3 className="mb-2 text-xl font-semibold text-gray-800 transition-colors group-hover:text-indigo-600">
+                날씨 앱
+              </h3>
+              <p className="mb-4 text-gray-600">
+                JavaScript와 날씨 API를 이용한 간단한 날씨 정보 웹사이트입니다.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="rounded bg-gray-200 px-2 py-1 text-xs">
+                  HTML
+                </span>
+                <span className="rounded bg-gray-200 px-2 py-1 text-xs">
+                  CSS
+                </span>
+                <span className="rounded bg-gray-200 px-2 py-1 text-xs">
+                  JavaScript
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 연락처 섹션 */}
+      <section id="contact" className="container mx-auto bg-white px-4 py-16">
+        <h2 className="mb-12 text-center text-3xl font-bold text-gray-800">
+          연락처
+        </h2>
+        <div className="mx-auto max-w-md rounded-xl bg-gray-50 p-8 shadow-lg">
+          <form className="space-y-4">
+            <div>
+              <label className="mb-2 block text-gray-700" htmlFor="name">
+                이름
+              </label>
+              <input
+                type="text"
+                id="name"
+                className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                placeholder="홍길동"
+              />
+            </div>
+            <div>
+              <label className="mb-2 block text-gray-700" htmlFor="email">
+                이메일
+              </label>
+              <input
+                type="email"
+                id="email"
+                className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                placeholder="example@email.com"
+              />
+            </div>
+            <div>
+              <label className="mb-2 block text-gray-700" htmlFor="message">
+                메시지
+              </label>
+              <textarea
+                id="message"
+                rows={4}
+                className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                placeholder="메시지를 입력하세요..."
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              className="w-full rounded-lg bg-indigo-600 px-4 py-2 text-white transition-colors hover:bg-indigo-700"
+            >
+              보내기
+            </button>
+          </form>
+        </div>
+      </section>
+
+      {/* 푸터 */}
+      <footer className="bg-gray-800 py-8 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <p className="mb-4">© 2025 내 포트폴리오. All rights reserved.</p>
+          <div className="flex justify-center space-x-4">
+            <a href="#" className="transition-colors hover:text-indigo-400">
+              Twitter
+            </a>
+            <a href="#" className="transition-colors hover:text-indigo-400">
+              GitHub
+            </a>
+            <a href="#" className="transition-colors hover:text-indigo-400">
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
