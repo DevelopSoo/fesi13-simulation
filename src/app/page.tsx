@@ -1,24 +1,44 @@
 "use client";
 
-import { motion, useScroll } from "motion/react";
+import { useEffect, useRef } from "react";
 
 export default function Home() {
-  const { scrollYProgress } = useScroll();
+  // 숫자값 저장할 ref
+  const countRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // 숫자값 초기화
+    let count = 0;
+    // 애니메이션 실행 아이디
+    let animationId: number;
+
+    const animate = () => {
+      // 숫자값 저장할 ref가 있으면
+      if (countRef.current) {
+        // 숫자값 표시
+        countRef.current.textContent = count.toString();
+        // 숫자값 증가
+        count = Math.min(count + 1, 1201);
+
+        // 숫자값이 1200보다 작거나 같으면
+        if (count <= 1200) {
+          // 애니메이션 실행
+          animationId = requestAnimationFrame(animate);
+        }
+      }
+    };
+
+    // 애니메이션 실행
+    animationId = requestAnimationFrame(animate);
+    // 애니메이션 종료
+    return () => cancelAnimationFrame(animationId);
+  }, []);
 
   return (
-    <div>
-      <motion.div
-        className="fixed top-0 right-0 left-0 h-2 origin-left bg-blue-500"
-        style={{ scaleX: scrollYProgress }}
-      />
-      <div className="p-4">
-        <h1 className="mb-4 text-2xl font-bold">스크롤 프로그레스 바 테스트</h1>
-        {[...Array(50)].map((_, i) => (
-          <p key={i} className="mb-4">
-            테스트 문단 {i + 1}. 스크롤을 내려서 프로그레스 바를 확인해보세요.
-          </p>
-        ))}
+    <main className="h-screen p-8">
+      <div ref={countRef} className="text-4xl">
+        0
       </div>
-    </div>
+    </main>
   );
 }

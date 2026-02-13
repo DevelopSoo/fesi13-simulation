@@ -1,16 +1,16 @@
-// app/about/page.tsx
+"use client";
 
-import Link from "next/link";
+import * as m from "motion/react-m";
+// import { motion } from "motion/react";
 
 export default function About() {
   return (
-    <>
-      <div>
-        <h1>About 페이지</h1>
-      </div>
-      <Link className="text-blue-500 underline" href="/">
-        홈으로
-      </Link>
-    </>
+    <m.div
+      initial={{ x: -100, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      왼쪽에서 슬라이드 인!
+    </m.div>
   );
 }
