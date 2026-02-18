@@ -1,44 +1,42 @@
+// Next.js 프론트엔드 코드
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useState } from "react";
 
 export default function Home() {
-  // 숫자값 저장할 ref
-  const countRef = useRef<HTMLDivElement>(null);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    // 숫자값 초기화
-    let count = 0;
-    // 애니메이션 실행 아이디
-    let animationId: number;
-
-    const animate = () => {
-      // 숫자값 저장할 ref가 있으면
-      if (countRef.current) {
-        // 숫자값 표시
-        countRef.current.textContent = count.toString();
-        // 숫자값 증가
-        count = Math.min(count + 1, 1201);
-
-        // 숫자값이 1200보다 작거나 같으면
-        if (count <= 1200) {
-          // 애니메이션 실행
-          animationId = requestAnimationFrame(animate);
-        }
-      }
-    };
-
-    // 애니메이션 실행
-    animationId = requestAnimationFrame(animate);
-    // 애니메이션 종료
-    return () => cancelAnimationFrame(animationId);
-  }, []);
+  const handleLogin = async () => {
+    const response = await fetch("http://localhost:4000/api/login", {
+      method: "POST",
+      body: JSON.stringify({ username, password }),
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+  };
 
   return (
-    <main className="h-screen p-8">
-      <div ref={countRef} className="text-4xl">
-        0
-      </div>
-    </main>
+    <div>
+      <h1>로그인 페이지</h1>
+      <input
+        type="text"
+        placeholder="아이디"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="비밀번호"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button onClick={handleLogin}>로그인</button>
+      <a href="http://localhost:5173">링크 유도</a>
+    </div>
   );
 }
