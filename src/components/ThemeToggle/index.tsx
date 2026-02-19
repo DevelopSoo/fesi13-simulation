@@ -1,30 +1,24 @@
+// src/components/ThemeToggle/index.tsx
+
 "use client";
 
-import { useTheme } from "next-themes";
+import { useTheme } from "@/contexts/ThemeContext";
 
-export default function ThemeToggle() {
-  const { setTheme } = useTheme();
+export const ThemeToggle = () => {
+  const { theme, toggleTheme } = useTheme();
 
   return (
-    <div className="flex gap-2">
+    <div className="p-4">
       <button
-        className="rounded-md border border-gray-300 p-2"
-        onClick={() => setTheme("system")}
+        onClick={toggleTheme}
+        className={`${
+          theme === "light"
+            ? "rounded-md bg-gray-200 px-4 py-2 text-black hover:bg-gray-300"
+            : "rounded-md bg-gray-800 px-4 py-2 text-white hover:bg-gray-900"
+        }`}
       >
-        시스템
-      </button>
-      <button
-        className="rounded-md border border-gray-300 p-2"
-        onClick={() => setTheme("dark")}
-      >
-        다크
-      </button>
-      <button
-        className="rounded-md border border-gray-300 p-2"
-        onClick={() => setTheme("light")}
-      >
-        라이트
+        {theme === "light" ? "다크 모드로 전환" : "라이트 모드로 전환"}
       </button>
     </div>
   );
-}
+};
