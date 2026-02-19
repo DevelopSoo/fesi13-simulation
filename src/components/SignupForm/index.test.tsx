@@ -1,39 +1,53 @@
-// src/components/SignupForm/index.test.tsx
+// src/components/SignupForm.test.tsx
 
 import { render, screen } from "@testing-library/react";
-import SignupForm from "./index";
+import { SignupForm } from ".";
+import userEvent from "@testing-library/user-event";
 
-// 1. 이메일, 비밀번호, 비밀번호 확인 입력 필드가 제대로 렌더링되는지 확인하기
-test("이메일, 비밀번호, 비밀번호 확인 입력 필드가 렌더링되어야 한다", () => {
+test("이메일, 비밀번호, 확인 비밀번호 입력 후 제출 이벤트 테스트", async () => {
+  // userEvent 설정
+  const user = userEvent.setup();
   render(<SignupForm />);
 
-  // getByLabelText를 사용하여 각 입력 필드를 찾을 수 있는지 확인
+  const alertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
+
+  // 이메일 입력 필드 확인
   const emailInput = screen.getByLabelText("이메일");
+  // 이메일 입력
+  await user.type(emailInput, "test@example.com");
+  // 이메일 필드에서 탭 키를 눌러 포커스 이동
+  await user.tab();
+  // X 버튼 부분에 focus 되어 한 번 더 탭 키를 눌러 포커스 이동
+  await user.tab();
+
+  // 비밀번호 입력 필드 확인
   const passwordInput = screen.getByLabelText("비밀번호");
-  const passwordConfirmInput = screen.getByLabelText("비밀번호 확인");
+  expect(passwordInput).toHaveFocus();
+  // 비밀번호 입력
+  await user.type(passwordInput, "password123");
+  // 비밀번호 필드에서 탭 키를 눌러 포커스 이동
+  await user.tab();
+  // X 버튼 부분에 focus 되어 한 번 더 탭 키를 눌러 포커스 이동
+  await user.tab();
 
-  expect(emailInput).toBeInTheDocument();
-  expect(passwordInput).toBeInTheDocument();
-  expect(passwordConfirmInput).toBeInTheDocument();
-});
+  // 확인 비밀번호 입력 필드 확인
+  const confirmPasswordInput = screen.getByLabelText("비밀번호 확인");
+  expect(confirmPasswordInput).toHaveFocus();
+  // 확인 비밀번호 입력
+  await user.type(confirmPasswordInput, "password123");
+  // 확인 비밀번호 필드에서 탭 키를 눌러 포커스 이동
+  await user.tab();
+  // X 버튼 부분에 focus 되어 한 번 더 탭 키를 눌러 포커스 이동
+  await user.tab();
 
-// 2. 비밀번호 입력 필드의 type이 "password"인지 확인
-test('비밀번호 입력 필드의 type이 "password"여야 한다', () => {
-  render(<SignupForm />);
+  // 제출 이벤트 발생
+  const signupButton = screen.getByRole("button", { name: "회원가입" });
+  expect(signupButton).toHaveFocus();
+  await user.keyboard("{Enter}");
 
-  const passwordInput = screen.getByPlaceholderText("비밀번호");
-  const passwordConfirmInput = screen.getByPlaceholderText("비밀번호 확인");
+  // 콘솔 로그 확인
+  expect(alertSpy).toHaveBeenCalledWith("test@example.com님 반갑습니다.");
 
-  // toHaveAttribute 매처를 사용하여 type 속성 확인
-  expect(passwordInput).toHaveAttribute("type", "password");
-  expect(passwordConfirmInput).toHaveAttribute("type", "password");
-});
-
-// 3. 회원가입 버튼이 렌더링되는지 확인
-test("회원가입 버튼이 렌더링되어야 한다", () => {
-  render(<SignupForm />);
-
-  const submitButton = screen.getByRole("button", { name: "회원가입" });
-
-  expect(submitButton).toBeInTheDocument();
+  // jest.spyOn()으로 생성된 스파이(spy)를 원래 구현(original implementation)으로 완전히 복원하는 역할
+  alertSpy.mockRestore();
 });

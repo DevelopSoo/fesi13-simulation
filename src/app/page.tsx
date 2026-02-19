@@ -1,13 +1,35 @@
-// app/page.tsx
+// src/app/page.tsx
 
-import { LikeButton } from "@/components/LikeButton";
+"use client";
+
+import { useFetch } from "@/hooks/useFetch";
+
+type Post = {
+  id: number;
+  userId: number;
+  title: string;
+  body: string;
+};
 
 export default function Home() {
+  const { data, loading, error } = useFetch<Post[]>(
+    "https://jsonplaceholder.typicode.com/posts",
+  );
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div className="text-red-500">{error}</div>;
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-4">
-      <div className="w-96">
-        <LikeButton />
-      </div>
+    <div className="flex h-screen items-center justify-center">
+      <ul>
+        {data?.map((item) => (
+          <li key={item.id} className="mb-2">
+            <h3 className="font-bold">
+              {item.id}: {item.title}
+            </h3>
+            <p>{item.body}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
