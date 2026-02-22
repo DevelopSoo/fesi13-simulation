@@ -14,10 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <MSWProvider>
-          <h1>서버 컴포넌트</h1>
-          {children}
-        </MSWProvider>
+        <MSWProvider>{children}</MSWProvider>
       </body>
     </html>
   );
