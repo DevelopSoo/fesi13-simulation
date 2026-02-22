@@ -10,7 +10,8 @@
     "test": "jest",
     "server": "json-server --watch db.json --port=4000",
     "test:playwright": "playwright test",
-    "test:playwright:ui": "playwright test --ui"
+    "test:playwright:ui": "playwright test --ui",
+    "updateSnapshot": "npx jest --updateSnapshot"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
