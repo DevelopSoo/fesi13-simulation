@@ -1,0 +1,51 @@
+# .github/workflows/chromatic.yml
+
+name: "Chromatic"
+
+on:
+  pull_request:
+    branches: main
+
+# 댓글 쓰기 권한을 부여
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  chromatic:
+    name: Run Chromatic
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.13.0
+      - name: Install dependencies
+        run: npm ci
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          # 변경사항이 있을 때 빌드를 실패(exit code 1)로 만들어 머지를 차단
+          exitZeroOnChanges: false
+          # 변경된 파일과 관련된 스토리만 테스트하여 빌드 속도를 최적화
+          onlyChanged: true
+
+      # 빌드가 성공하든 실패하든(변경사항이 있든 없든) 항상 PR 코멘트를 남김
+      - name: Comment PR with Chromatic results
+        if: always()
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: "chromatic-review" # 여러 번 실행되어도 코멘트를 하나로 유지(업데이트)
+          message: |
+            ### 🎨 UI Review (Chromatic)
+
+            | 결과 | 상세 내용 |
+            | :--- | :--- |
+            | 🚀 **Storybook Preview** | [미리보기 바로가기](${{ steps.chromatic_build.outputs.storybookUrl }}) |
+            | 🛠 **Build Details** | [Chromatic 빌드 리포트](${{ steps.chromatic_build.outputs.buildUrl }}) |
+
+            > **알림:** 시각적 변경 사항이 발견되면 리뷰어가 Chromatic에서 승인해야 머지가 가능합니다.
