@@ -1,15 +1,5 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`Button 컴포넌트가 올바르게 렌더링됩니다 1`] = `
-<div>
-  <button
-    class="bg-red-500"
-  >
-    클릭하세요
-  </button>
-</div>
-`;
-
 exports[`Button 컴포넌트가 올바르게 렌더링됩니다. 기본 상태 1`] = `
 <div>
   <button
