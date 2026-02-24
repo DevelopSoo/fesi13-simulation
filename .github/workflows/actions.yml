@@ -1,0 +1,14 @@
+# .github/workflows/actions.yml
+
+# 이름 짓기
+name: Github Actions 연습하기
+# 언제 이 작업을 실행할지 정의
+# push: github에 push할 때마다 실행
+on: push
+
+jobs:
+  push-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 첫 번째 작업
+        run: echo "첫 번째 작업 실행 중"
