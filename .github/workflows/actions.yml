@@ -1,26 +1,18 @@
-name: output 연습
-on: push
+name: if 조건 연습
+on:
+  push:
+    branches:
+      - develop
+      - main
 
 jobs:
-  create-output:
+  if-test:
     runs-on: ubuntu-latest
-    # 현재 job의 step 중에 save-output이라는 id를 가진 step의
-    # output의 키가 message인 값을 abc라는 이름으로 내보내기 할거야.
-    outputs:
-      abc: ${{ steps.save-output.outputs.message }}
     steps:
-      - name: output 저장
-        id: save-output
-        run: echo "message=안녕" >> $GITHUB_OUTPUT
+      - name: develop 브랜치일 때만 실행
+        if: github.ref == 'refs/heads/develop'
+        run: echo "develop 브랜치에 푸시되었고, Staging 환경에 배포합니다."
 
-      - name: output 사용
-        run: echo "저장된 키는 ${{ steps.save-output.outputs.message }}입니다."
-
-  use-output:
-    runs-on: ubuntu-latest
-    # 위의 job(create-output)에서 만든 outputs를 해당 job(use-output)에서 사용하기 위해선
-    # 위 job(create-output)이 실패하면 안되기 때문에 needs가 필요합니다.
-    needs: create-output
-    steps:
-      - name: output 사용
-        run: echo "이 job에서 사용할 output은 ${{ needs.create-output.outputs.abc }}입니다."
+      - name: main 브랜치일 때만 실행
+        if: github.ref == 'refs/heads/main'
+        run: echo "main 브랜치에 푸시되었고, Production 환경에 배포합니다."
