@@ -1,22 +1,21 @@
 # .github/workflows/actions.yml
 
-name: Github Actions로 테스트 자동화하기
-on: workflow_dispatch
+name: Github Actions로 작업 병렬로 실행하기
+on: push
 
 jobs:
-  test:
+  first_job:
     runs-on: ubuntu-latest
     steps:
-      - name: Github Repository 불러오기
-        uses: actions/checkout@v5
+      - name: 첫 번째 작업의 1단계
+        run: echo "첫 번째 작업의 첫 번째 단계입니다."
+      - name: 첫 번째 작업의 2단계
+        run: echo "첫 번째 작업의 두 번째 단계입니다."
 
-      - name: Node.js 설치하기
-        uses: actions/setup-node@v6
-        with:
-          node-version: "24"
-
-      - name: 의존성(라이브러리) 설치
-        run: npm ci
-
-      - name: 테스트 실행하기
-        run: npm run test
+  second_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 두 번째 작업의 1단계
+        run: echo "두 번째 작업의 첫 번째 단계입니다."
+      - name: 두 번째 작업의 2단계
+        run: echo "두 번째 작업의 두 번째 단계입니다."
