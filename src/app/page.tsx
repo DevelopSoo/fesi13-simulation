@@ -1,10 +1,20 @@
 // src/app/page.tsx
 
+'use client';
+
+import * as Sentry from '@sentry/nextjs';
+
 export default function Home() {
   return (
     <div>
-      <h1 className="text-2xl font-bold">게시글 목록</h1>
-      <p>환경: {process.env.NEXT_PUBLIC_MY_ENVIRONMENT}</p>
+      <h1>Sentry 알림 테스트</h1>
+      <button
+        onClick={() => {
+          Sentry.captureException(new RangeError('Range Error'));
+        }}
+      >
+        에러 발생
+      </button>
     </div>
   );
 }

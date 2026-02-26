@@ -1,11 +1,6 @@
 // src/app/layout.tsx
 
 import './globals.css';
-import { initMocks } from '@/mocks';
-import { MSWProvider } from '@/providers/MSWProvider';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-
-initMocks();
 
 export default function RootLayout({
   children,
@@ -14,10 +9,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <MSWProvider>{children}</MSWProvider>
-        <SpeedInsights />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
