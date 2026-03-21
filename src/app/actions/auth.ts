@@ -1,3 +1,5 @@
+// src/app/actions/auth.ts
+
 // 서버 액션 => 서버에서 실행되는 함수
 // 클라이언트에서 호출 -> 사실은 내부적으로 fetch("Next.js 서버 주소", { method: "POST"})
 'use server';

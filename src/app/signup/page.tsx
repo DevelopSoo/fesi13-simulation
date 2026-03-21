@@ -1,3 +1,5 @@
+// src/app/signup/page.tsx
+
 // 회원가입
 // controlled + route handler
 

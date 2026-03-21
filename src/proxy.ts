@@ -1,3 +1,4 @@
+// src/proxy.ts
 // 아예 처음부터 막고 싶어
 
 import { cookies } from 'next/headers';
