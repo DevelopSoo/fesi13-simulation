@@ -56,6 +56,7 @@ export async function login(formData: FormData) {
     secure: true,
     sameSite: 'lax',
     path: '/',
+    maxAge: 60 * 14, // 15분 - 1분
   });
 
   cookieStore.set('refreshToken', refreshToken, {
@@ -63,7 +64,19 @@ export async function login(formData: FormData) {
     secure: true,
     sameSite: 'lax',
     path: '/',
+    maxAge: 60 * 59, // 1시간 - 1분
   });
 
   redirect('/mypage');
+}
+
+export async function logout() {
+  const cookieStore = await cookies();
+
+  // 쿠키에서 토큰 삭제
+  cookieStore.delete('accessToken');
+  cookieStore.delete('refreshToken');
+
+  // 로그아웃 후 로그인 페이지로 강제 이동
+  redirect('/login');
 }

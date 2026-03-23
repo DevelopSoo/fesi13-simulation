@@ -6,8 +6,6 @@ import { NextResponse } from 'next/server';
 export async function GET() {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
-
-  // accessToken이 필요하다
   const response = await fetch(
     'https://together-dallaem-api.vercel.app/soo/users/me',
     {
@@ -19,5 +17,5 @@ export async function GET() {
   );
 
   const data = await response.json();
-  return NextResponse.json(data);
+  return NextResponse.json(data, { status: response.status });
 }
