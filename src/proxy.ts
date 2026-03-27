@@ -9,7 +9,7 @@ export default async function proxy(request: NextRequest) {
 
   // 2. 토큰이 없으면 로그인으로
   if (!accessToken && !refreshToken) {
-    return NextResponse.redirect('http://localhost:3000/login');
+    return NextResponse.redirect('/login');
   }
 
   return NextResponse.next();
