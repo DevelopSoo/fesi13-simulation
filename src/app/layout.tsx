@@ -1,5 +1,6 @@
 // src/app/layout.tsx
 
+import Link from 'next/link';
 import './globals.css';
 
 export default function RootLayout({
@@ -9,7 +10,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <div className="flex gap-2">
+          <Link href="/">홈</Link>
+          <Link href="/mypage">마이</Link>
+        </div>
+        {children}
+      </body>
     </html>
   );
 }

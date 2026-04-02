@@ -54,6 +54,7 @@ export async function login(formData: FormData) {
     secure: true,
     sameSite: 'lax',
     path: '/',
+    maxAge: 60 * 14,
   });
 
   cookieStore.set('refreshToken', refreshToken, {
@@ -61,6 +62,7 @@ export async function login(formData: FormData) {
     secure: true,
     sameSite: 'lax',
     path: '/',
+    maxAge: 60 * 59,
   });
 
   redirect('/mypage');
